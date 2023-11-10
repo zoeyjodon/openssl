@@ -34,6 +34,9 @@
 #   include <sys/un.h>
 #   include <tcp.h>
 #   include <netdb.h>
+#   if defined(__3DS__)
+#    include "3ds/netdb.h"
+#   endif
 #   include <arpa/inet.h>
 #   include <netinet/tcp.h>
 #  elif defined(_WIN32_WCE) && _WIN32_WCE<410
@@ -71,6 +74,9 @@ struct servent *PASCAL getservbyname(const char *, const char *);
 #  endif
 
 #  include <netdb.h>
+#  if defined(__3DS__)
+#   include "3ds/netdb.h"
+#  endif
 #  if defined(OPENSSL_SYS_VMS_NODECC)
 #   include <socket.h>
 #   include <in.h>
@@ -118,7 +124,7 @@ struct servent *PASCAL getservbyname(const char *, const char *);
  * bad versions.
  */
 # if !defined(OPENSSL_USE_IPV6)
-#  if defined(AF_INET6)
+#  if defined(AF_INET6) && !(defined(__3DS__))
 #   define OPENSSL_USE_IPV6 1
 #  else
 #   define OPENSSL_USE_IPV6 0

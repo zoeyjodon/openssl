@@ -31,6 +31,9 @@
 #include <openssl/err.h>
 #include <openssl/buffer.h>
 #include "internal/thread_once.h"
+#if defined(__3DS__)
+#include "3ds/netdb.h"
+#endif
 
 CRYPTO_RWLOCK *bio_lookup_lock;
 static CRYPTO_ONCE bio_lookup_init = CRYPTO_ONCE_STATIC_INIT;

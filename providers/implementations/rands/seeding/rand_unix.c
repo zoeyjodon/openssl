@@ -188,6 +188,40 @@ void ossl_rand_pool_keep_random_devices_open(int keep)
 {
 }
 
+# elif defined __3DS__
+#include <time.h>
+
+size_t ossl_pool_acquire_entropy(RAND_POOL *pool)
+{
+    int i;
+    size_t bytes_needed;
+    unsigned char v;
+
+    bytes_needed = ossl_rand_pool_bytes_needed(pool, 4 /*entropy_factor*/);
+
+    for (i = 0; i < bytes_needed; i++) {
+        srand(time(NULL));
+        v = rand() & 0xff;
+
+        ossl_rand_pool_add(pool, &v, sizeof(v), 2);
+    }
+
+    return ossl_rand_pool_entropy_available(pool);
+}
+
+int ossl_rand_pool_init(void)
+{
+    return 1;
+}
+
+void ossl_rand_pool_cleanup(void)
+{
+}
+
+void ossl_rand_pool_keep_random_devices_open(int keep)
+{
+}
+
 # else
 
 #  if defined(OPENSSL_RAND_SEED_EGD) && \

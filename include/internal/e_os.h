@@ -339,6 +339,9 @@ static ossl_inline void ossl_sleep(unsigned long millis)
 # if defined(__TANDEM) && defined(_GUARDIAN_TARGET)
 #  include <strings.h>
 #  include <netdb.h>
+#  if defined(__3DS__)
+#   include "3ds/netdb.h"
+#  endif
 #  define getservbyname(name,proto)          getservbyname((char*)name,proto)
 #  define gethostbyname(name)                gethostbyname((char*)name)
 #  define ioctlsocket(a,b,c)	ioctl(a,b,c)

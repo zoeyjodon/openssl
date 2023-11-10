@@ -88,6 +88,7 @@ int BIO_connect(int sock, const BIO_ADDR *addr, int options)
     if (!BIO_socket_nbio(sock, (options & BIO_SOCK_NONBLOCK) != 0))
         return 0;
 
+#if !defined(__3DS__)
     if (options & BIO_SOCK_KEEPALIVE) {
         if (setsockopt(sock, SOL_SOCKET, SO_KEEPALIVE,
                        (const void *)&on, sizeof(on)) != 0) {
@@ -97,6 +98,7 @@ int BIO_connect(int sock, const BIO_ADDR *addr, int options)
             return 0;
         }
     }
+#endif
 
     if (options & BIO_SOCK_NODELAY) {
         if (setsockopt(sock, IPPROTO_TCP, TCP_NODELAY,
@@ -242,6 +244,7 @@ int BIO_listen(int sock, const BIO_ADDR *addr, int options)
     if (!BIO_socket_nbio(sock, (options & BIO_SOCK_NONBLOCK) != 0))
         return 0;
 
+#if !defined(__3DS__)
     if (options & BIO_SOCK_KEEPALIVE) {
         if (setsockopt(sock, SOL_SOCKET, SO_KEEPALIVE,
                        (const void *)&on, sizeof(on)) != 0) {
@@ -251,6 +254,7 @@ int BIO_listen(int sock, const BIO_ADDR *addr, int options)
             return 0;
         }
     }
+#endif
 
     if (options & BIO_SOCK_NODELAY) {
         if (setsockopt(sock, IPPROTO_TCP, TCP_NODELAY,

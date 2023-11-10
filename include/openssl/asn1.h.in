@@ -25,7 +25,11 @@ use OpenSSL::stackhash qw(generate_stack_macros);
 # ifndef OPENSSL_NO_STDIO
 #  include <stdio.h>
 # endif
-# include <time.h>
+# if defined(__3DS__)
+#  include <sys/time.h>
+# else
+#  include <time.h>
+# endif
 # include <openssl/e_os2.h>
 # include <openssl/opensslconf.h>
 # include <openssl/bio.h>
